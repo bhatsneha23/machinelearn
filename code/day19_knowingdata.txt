@@ -1,0 +1,15 @@
+datatype of cols
+df.info()
+
+to find number of missing values 
+df.isnull().sum()
+
+mathematical summary of data
+df.describe()
+
+for duplicate values
+df.duplicated().sum()
+
+corelation between columns
+df.corr()['any col name{for any specific column}']
+

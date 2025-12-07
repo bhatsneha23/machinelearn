@@ -1,0 +1,71 @@
+A) CSV                                                                                                           *
+(1) Opening a local csv file                                                                                     *
+df = pd.read_csv('file path')                                                                                    *
+                                                                                                                 *
+B) FROM GITHUB                                                                                                  *
+import requests                                                                                                  *
+from io import StringIO                                                                                          *
+url = "url ko in inverted commas mei paste kro"                                                                  *
+headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:66.0) Gecko/20100101 Firefox/66.0"}   *
+req = requests.get(url,headers = headers)                                                                        *
+data = StringIO(req.text)                                                                                        *
+pd.read_csv(data)                                                                                                *
+                                                                                                                 *
+******************************************************************************************************************
+C)(tsv mei data sara ek single line mei aa jata hai) TSV(sep parameter)
+pd.read_csv('file_name.tsv',sep ='\t' , names =['sno','name','release_year','rating','votes','genres'])   jo bhi yeh names likhe hai yeh chiz tb add krni 
+hoti hai jb hmari 1st col na ho aur hmara first row khud ji col bn jae
+
+D) To convert serial no which is already given in dataset 
+like enrollement_id (though it is not much useful)
+pd.read_csv('file_name',index_col = 'enrollee_id')
+
+e)HEADER PARAMETER jb hmare pass column name nhi hai aur jb hamare col name row ke trah 
+treat hone lagte hai
+pd.read_csv('test.csv,header =1)
+
+f)WHEN YOU HAVE TO USE SPECIFIC COLS
+pd.read_csv("csv_name",usecols = ['e_id' , 'gender'])
+
+
+yeh pandas ka series obj hai utna kaam mei nhi aata
+g)squeeze parameter jb hme kisi ek specific col pr kaam krna ho pure dataset se
+pd.read_csv("dataset_name" , usecols = ['gender'] ,squeeze = True)
+
+h) skiprows pd.read_csv('test.csv', skiprows = [0,5]) //some error
+
+i)nrows paramter pd.read_csv('test.csv',nrows = 100) 200 ke dataset mei se 100 chahiye
+
+j)encoding parameter
+pd.read_csv('test.csv',encoding = 'latin = 1')
+
+k) skip bad lines  kbhi kbhi kisi bhi 8 col dataset mei kisi line mei 9 line find ke li
+pd.read_csv('test.csv',sep = ';' , encoding = 'latin-1' , error_bad_lines = False)
+
+l)dtypes parameter 
+pd.read_csv('test.csv',dtype = {'target':int})
+
+m) by default date ko object mtlb string ki form mei pass kiya jata hai
+toh usey convert krne ke liye
+pd.read_csv("dataset_name",parse_dates =['data' {ye date idhar col name hai}])
+
+n) suppose kisi dataset mei team1 mei pura royal challengers bengaluru likha aa rha hai aut tuje uski jgah rcb likha hua chahiye
+then converter use mei aayega jaise step1 tuje ek function bnana hoga 
+def rename(name):
+    if name == "Royal Challengers Bengaluru"
+        return "RCB"
+    else:
+        return
+
+pd.read_csv("ipl.csv" , converters = {'team1':rename})
+
+o) na_values parameter 
+pd.read_csv("dataset_name.csv',na_values = ['male']) 
+ab jahan jahan male likha hoga wahan wahan woh bhi na ki trah khali treat hoga
+
+p)bde dataset ko handle krne ke liye use chunks mei divide kiya jata hai
+ab hme saare opoerations iske karan loop mei perform krne honge
+
+dfs = pd.read_csv("dataset_name.csv",chunksize = 5000)
+for chunks in dfs:
+    print(chunk.shape)
